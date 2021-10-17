@@ -77,7 +77,7 @@ function generateUserCard(user) {
                             <li class="list-group-item">Company: ${user.company}</li>
                             <li class="list-group-item">Website/Blog: ${user.blog}</li>
                             <li class="list-group-item">Location: ${user.location}</li>
-                            <li class="list-group-item">Member Since: ${user.created_at}</li>
+                            <li class="list-group-item">Member Since: ${new Date(user.created_at)}</li>
                     </ul>
             </div>
             </div>
