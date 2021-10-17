@@ -3,14 +3,14 @@ const heading = document.getElementById('main');
 const form = document.getElementById('form');
 const search = document.getElementById('search');
 
-console.log(apiUrl);
+// console.log(apiUrl);
 
-findUser("Tire11");
+// findUser("Tire11");
 
 async function findUser(username) {
     const res = await fetch(apiUrl + username);
     const resData = await res.json();
-    console.log(resData);
+//     console.log(resData);
     generateUserCard(resData);
     collectRepos(username);
 }
@@ -22,17 +22,41 @@ async function collectRepos(username) {
     joinReposToCard(resData);
 }
 
-function joinReposToCard(repos) {
-    const myRepos = document.getElementById("repos");
-    repos.forEach((repo) => {
-        const myRepo = document.createElement("a");
-        myRepo.classList.add("repo");
-        myRepo.href = repo.html_url;
-        myRepo.target = "_blank";
-        myRepo.style = "text-decoration: none; margin: 5px 0; display: flex;"
-        myRepo.innerText = repo.name;
-        myRepos.appendChild(myRepo);
+// function joinReposToCard(repos) {
+//     const myRepos = document.getElementById("repos");
+//     repos.forEach((repo) => {
+//         const myRepo = document.createElement("a");
+//         myRepo.classList.add("repo");
+//         myRepo.href = repo.html_url;
+//         myRepo.target = "_blank";
+//         myRepo.style = "text-decoration: none; margin: 5px 0; display: flex;"
+//         myRepo.innerText = repo.name;
+//         myRepos.appendChild(myRepo);
+//     });
+// }
+
+function joinReposToCard(myRepos){
+    let product = "";
+
+    myRepos.forEach(function(myRepo) {
+        product += `
+        <div class="card my-2">
+            <div class="row">
+                <div class="col-md-6">
+                    <a href="${myRepo.html_url}" target="_blank" class="text-decoration-none">${myRepo.name}</a>
+                </div>
+                <div class="col-md-6">
+                    <span class="btn btn-primary">Stars: ${myRepo.stargazers_count}</span>
+                    <span class="btn btn-secondary">Watchers: ${myRepo.watchers_count}</span>
+                    <span class="btn btn-success">Forks: ${myRepo.forks_count}</span>
+                </div>
+            </div>
+        </div>
+        `;
+        const remove = myRepos.splice(5);
     });
+
+    document.getElementById("repos").innerHTML = product;
 }
 
 function generateUserCard(user) {
